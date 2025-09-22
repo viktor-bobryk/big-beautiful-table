@@ -1,7 +1,7 @@
 {
   "name": "big-beatiful-table",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.1.1",
+    "ag-grid-community": "^34.2.0",
+    "ag-grid-react": "^34.2.0",
+    "classnames": "^2.5.1",
     "react-dom": "^19.1.1",
     "vite-tsconfig-paths": "^5.1.4"
   },

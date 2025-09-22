@@ -1,11 +1,17 @@
 import './App.css'
+import DataTable from './components/DataTable';
 
 function App() {
 
   return (
-    <h1>
-        Big Beautiful Table
-    </h1>
+      <>
+          <h1>
+          Big Beautiful Table
+      </h1>
+          <DataTable />
+      </>
+
+
   )
 }
 
