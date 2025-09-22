@@ -1,69 +1,83 @@
-# React + TypeScript + Vite
+### <b>THERE ARE NEXT REQUIREMENTS FOR DEVELOPMENT WORKFLOW</b>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Prepare for running app local
 
-Currently, two official plugins are available:
+* Open a project in code redactor or web IDE<br />
+* Open console<br />
+* Run next npm commands<br />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`npm install` - install npm packages<br />
+`npm run dev` - creates a local UI build
 
-## Expanding the ESLint configuration
+## React Component code styleguide
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Component structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    import React, { useEffect, useState, useMemo, useCallback } from 'react';
+    import { useDispatch, useSelector } from 'react-redux';
+    import lib from 'lib';
+    
+    import { fetchData } from '..store/fetchData'
+    import { selectList } from '..store/selectors'
+    import hooks from './hooks';
+    import utils from './utils';
+    import helper from './helper';
+    import config from './config';
+    import types from './types'
+    import constants from './constants';
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    import Component from './Component';
+    import Button from 'common/Button'
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    import styles from './Style.module.scss';
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+    const MyComponent = { list } => {
+        const [editMode, setEditMode] = useState(false);
+        const [values, setValues] = useState([]);
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+        const dispatch = useDispatch();
+        const list = useSelector(selectList)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+        const valuesIds = useMemo(() => values.map(value => value.id), [values]);
+
+        ...hooks, ...localStorage, ...constants;
+
+        const getData = useCallback(() => {}, []);
+        
+        const handleClick = () => {};
+        
+        const onMount = () => {
+            dispatch(fetchData());
+        };
+        
+        useEffect(() => {
+            onMount();
+        }, []);
+        
+        return (
+            <div className={permissions.className}>
+                <Component getData={getData} />
+                <Button onClick={handleClick}>Click</Button>
+            </div>
+        );
+    };
+
+    export default MyComponent;
+
+### Project folder/file structure
+
+    components
+        common
+            Button
+                index.js
+                Button.js
+            EmailModalForm
+            ...
+        Projects
+            Projects.js
+            index.js
+                Item
+                    index.js
+                    Item.js
+                    Item.module.scss
+           

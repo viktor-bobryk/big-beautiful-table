@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-rational-order"
+  ],
+  "plugins": [
+    "stylelint-order"
+  ],
+  "rules": {
+    "no-descending-specificity": null
+  }
+}
