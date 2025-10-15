@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AgGridReact} from 'ag-grid-react';
 import {ColDef, ModuleRegistry, AllCommunityModule} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -6,6 +6,8 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import classNames from 'classnames';
 
 import styles from './DataTable.module.scss';
+import {fetchProducts} from '../store/slices/products/thunks';
+import {useAppDispatch} from '../hooks/redux';
 
 // Register all Community modules
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -28,6 +30,12 @@ const DataTable: React.FC = () => {
         {field: 'age', headerName: 'Age', sortable: true, filter: true},
         {field: 'job', headerName: 'Job Title', sortable: true, filter: true},
     ]);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
     return (
         <div className={classNames('ag-theme-alpine', styles['data-table'])}>
