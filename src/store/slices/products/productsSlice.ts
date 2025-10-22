@@ -3,12 +3,8 @@ import {fetchProducts} from './thunks';
 import {slicesNames} from '../constants';
 
 const initialState = {
-    page: 0,
-    size: 0,
-    totalElements: 0,
-    totalPages: 0,
-    sort: '',
-    results: [],
+    orderBatchId: '',
+    result: {page: 0, size: 0, totalElements: 0, totalPages: 0, sort: '', results: []},
 };
 
 export const productsSlice = createGenericSlice({
@@ -23,9 +19,8 @@ export const productsSlice = createGenericSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.fulfilled, (state, {payload}) => {
             if (payload) {
-                state.data = {
-                    ...payload.result,
-                };
+                console.log('payload ', payload);
+                state.data = payload;
             }
         });
     },

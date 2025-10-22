@@ -1,0 +1,106 @@
+@use './assets/scss/variables' as vars;
+
+#root {
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Table grid */
+.custom-grid-container {
+    height: 500px;
+    width: 100%;
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+}
+
+/* Table body */
+.ag-theme-alpine .ag-cell,
+.ag-theme-quartz .ag-cell,
+.custom-grid-container .ag-cell {
+    border-right: 1px solid #ccc;
+    padding: 0 3px;
+    font-size: 12px;
+    text-align: start;
+}
+
+/*  Last cells */
+.ag-theme-alpine .ag-row:last-child .ag-cell,
+.ag-theme-quartz .ag-row:last-child .ag-cell,
+.custom-grid-container .ag-row:last-child .ag-cell {
+    border-bottom: 1px solid #ccc;
+}
+
+/* Last row of table */
+.ag-center-cols-container {
+    .ag-row-last {
+        border-bottom: none;
+    }
+}
+
+/* Table header */
+.ag-theme-alpine .ag-header-cell,
+.ag-theme-quartz .ag-header-cell,
+.custom-grid-container .ag-header-cell,
+.ag-header-group-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal !important;
+    border-right: 1px solid #ccc;
+    padding: 0 2px;
+    .ag-header-group-cell-label {
+        width: 100%;
+        .ag-header-group-text {
+            width: 100%;
+            font-weight: 400;
+        }
+    }
+    .ag-header-cell-label {
+        width: 100%;
+        .ag-header-cell-text {
+            width: 100%;
+            font-weight: 400;
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: unset !important;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+    }
+}
+
+/* === Custom class name for outer header cells === */
+.outer-header {
+    background: linear-gradient(180deg, #0097a7 10%, #00838f 100%);
+    color: #fff;
+}
+
+/* === Custom class name for nested header cells === */
+.nested-header {
+    background: linear-gradient(180deg, #0097a7 10%, #009bab 100%);
+    color: #fff;
+}
+
+/* === Browser`s scrollbar customization === */
+::-webkit-scrollbar {
+    width: vars.$scroll-size;
+    height: vars.$scroll-size;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: vars.$scroll-size;
+}
+
+::-webkit-scrollbar-thumb {
+    background: vars.$primary-dark-color;
+    border-radius: vars.$scroll-size;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: vars.$primary-darker-color;
+}

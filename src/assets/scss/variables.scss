@@ -1,0 +1,47 @@
+@use 'sass:color';
+
+$dark-blue: #143b6d;
+$base-blue: #006e97;
+$grey-base: #4c4c4c;
+$grey-input: #6c757d;
+$grey-light: #d0cecc;
+$grey-lighter: #f8f9fa;
+$grey-titanium: #e5e5e5;
+$grey-mercury: #ebebeb;
+$grey-whisper: #e7e4e4;
+$title-bar-cyan: #0097a7;
+$cyan-dark: #00838f;
+$cyan-mid: #009bab;
+$cyan-light: #93c1d6;
+$teal-dark: #5b837b;
+$teal-mid: #709890;
+$teal-normal: #638b83;
+$teal-light: #b7cbc7;
+$base-bg: #f7f6f6;
+$border-bg: rgb(255 255 255 / 20%);
+$warning: #f59e0b;
+$warning-bg: #faefcf;
+$warning-text: #6d5100;
+$success: #43a047;
+$success-bg: #d6efdf;
+$help: #a855f7;
+$danger: #ef4444;
+$danger-bg: #ffe7e6;
+$danger-text: #73000c;
+$primary-color: #00bcd4;
+$primary-light-color: color.scale($primary-color, $lightness: 60%) !default;
+$primary-dark-color: color.scale($primary-color, $lightness: -10%) !default;
+$primary-darker-color: color.scale($primary-color, $lightness: -20%) !default;
+$shadow:
+    0 2px 1px -1px rgb(0 0 0 / 20%),
+    0 1px 1px 0 rgb(0 0 0 / 14%),
+    0 1px 3px 0 rgb(0 0 0 / 12%);
+$all-side-shadow: 0 0 5px 2px $grey-base;
+$width-xs: 576px;
+$width-sm: 768px;
+$width-md: 993px;
+$width-lg: 1024px;
+$width-xl: 1366px;
+$width-xxl: 1800px;
+$scroll-size: 7px;
+$animation-timing-function: cubic-bezier(0.05, 0.74, 0.2, 0.99) !default;

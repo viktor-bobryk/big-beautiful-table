@@ -1,0 +1,80 @@
+/* Outer wrapper */
+/*.ag-root-wrapper {*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 8px;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*!* === HEADER STYLING === *!*/
+/*.ag-header {*/
+/*    height: 70px !important;*/
+/*    background-color: #f4f6f8;*/
+/*    font-weight: 400;*/
+/*    color: #333;*/
+/*    border-bottom: 2px solid #ccc;*/
+/*}*/
+
+/*.ag-header-row {*/
+/*    display: flex;*/
+/*    height: auto !important;*/
+/*}*/
+
+/*.ag-header-cell,*/
+/*.ag-header-group-cell {*/
+/*    height: auto !important;*/
+/*    border-right: 1px solid #ccc;*/
+/*    text-align: center;*/
+/*    padding: 0;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*!* === BODY / CELLS === *!*/
+/*.ag-row {*/
+/*    display: flex;*/
+/*    border-bottom: 1px solid #ddd; !* ✅ Horizontal borders between rows *!*/
+
+/*    &:hover {*/
+/*        background-color: #f9fafb;*/
+/*    }*/
+/*}*/
+
+/*.ag-cell {*/
+/*    flex: 1 1 auto;*/
+/*    border-right: 1px solid #ddd; !* ✅ Vertical borders between cells *!*/
+/*    padding: 6px 10px;*/
+/*    box-sizing: border-box;*/
+/*    color: #222;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*    white-space: nowrap;*/
+/*}*/
+
+/*!* ✅ Remove the last column’s right border *!*/
+/*.ag-row .ag-cell:last-child,*/
+/*.ag-header-row .ag-header-cell:last-child {*/
+/*    border-right: none;*/
+/*}*/
+
+/*!* Pagination styling (optional) *!*/
+/*.ag-paging-panel {*/
+/*    border-top: 1px solid #ccc;*/
+/*    padding: 8px;*/
+/*    background-color: #fafafa;*/
+/*}*/
+/*.ag-header-cell-label {*/
+/*    white-space: normal !important;*/
+/*    line-height: 1.2;*/
+/*    text-align: center;*/
+/*    word-break: break-word;*/
+/*    display: block;*/
+/*}*/
+
+/*.ag-header-group-cell-label.ag-sticky-label {*/
+/*    width: 100%;*/
+/*    .ag-header-group-text {*/
+/*        text-align: center;*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/

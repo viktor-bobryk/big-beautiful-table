@@ -1,45 +1,55 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {ColDef, ModuleRegistry, AllCommunityModule} from 'ag-grid-community';
+import {ModuleRegistry, AllCommunityModule, ColDef} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import classNames from 'classnames';
 
-import styles from './DataTable.module.scss';
+import {selectDynamicColumns, selectTableData} from '../store/slices/products/selectors';
 import {fetchProducts} from '../store/slices/products/thunks';
 import {useAppDispatch} from '../hooks/redux';
+import {defaultColumns} from '../globalConstants';
 
-// Register all Community modules
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-type Person = {
-    name: string;
-    age: number;
-    job: string;
-};
-
 const DataTable: React.FC = () => {
-    const [rowData] = useState<Person[]>([
-        {name: 'John Doe', age: 28, job: 'Developer'},
-        {name: 'Jane Smith', age: 34, job: 'Designer'},
-        {name: 'Mike Johnson', age: 45, job: 'Manager'},
-    ]);
+    const [columns, setColumns] = useState([]);
+    const [rowData, setRowData] = useState([]);
 
-    const [columnDefs] = useState<ColDef<Person>[]>([
-        {field: 'name', headerName: 'Name', sortable: true, filter: true},
-        {field: 'age', headerName: 'Age', sortable: true, filter: true},
-        {field: 'job', headerName: 'Job Title', sortable: true, filter: true},
-    ]);
-
+    const dynamicColumns = useSelector(selectDynamicColumns);
+    const tableData = useSelector(selectTableData);
     const dispatch = useAppDispatch();
+
+    const defaultColDef = useMemo<ColDef>(() => {
+        return {
+            resizable: true,
+            wrapText: false,
+            autoHeight: false,
+        };
+    }, []);
 
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
 
+    useEffect(() => {
+        setColumns([...defaultColumns, ...dynamicColumns]);
+    }, [dynamicColumns]);
+
+    useEffect(() => {
+        setRowData(tableData);
+    }, [tableData]);
+
     return (
-        <div className={classNames('ag-theme-alpine', styles['data-table'])}>
-            <AgGridReact<Person> rowData={rowData} columnDefs={columnDefs} pagination={true} paginationPageSize={5} />
+        <div className="custom-grid-container ag-theme-alpine">
+            <AgGridReact
+                rowData={rowData}
+                columnDefs={columns}
+                defaultColDef={defaultColDef}
+                pagination={true}
+                paginationPageSize={10}
+                headerHeight={38}
+            />
         </div>
     );
 };

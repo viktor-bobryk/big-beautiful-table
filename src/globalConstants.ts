@@ -1,3 +1,13 @@
+export enum dateFormat {
+    USA = 'MM/DD/YYYY',
+    ISO = 'YYYY-MM-DD',
+    GMT = 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ',
+}
+
+export enum dateTimeFormat {
+    USA_LONG = 'MM/DD/YYYY hh:mm A',
+    USA_SHORT = 'MM/DD/YYYY H:mm',
+}
 export const mockedData = {
     orderBatchId: 'ecf66c68-fed2-4967-b17b-e574fd269e94',
     result: {
@@ -1137,3 +1147,158 @@ export const mockedData = {
         ],
     },
 };
+
+export enum defaultRowFields {
+    ID = 'id',
+    STORE = 'store',
+    CITY = 'city',
+    STATE = 'state',
+    SHIP_ZONE_DESCRIPTION = 'ship_zone_description',
+    SHIP_ZONE_CODE = 'ship_zone_code',
+    SHIP_ZONE_ID = 'ship_zone_id',
+    STORE_GROUP_NAME = 'store_group_name',
+    STORE_GROUP_ID = 'store_group_id',
+    PRODUCT_PROGRAM_NAME = 'product_program_name',
+    PRODUCT_PROGRAM_ID = 'product_program_id',
+    PRODUCT_CATEGORY_NAME = 'product_category_name',
+    PRODUCT_CATEGORY_ID = 'product_category_id',
+    PRODUCT_CATEGORY_DESCRIPTION = 'product_category_description',
+    PRODUCT_CODE = 'product_code',
+    PRODUCT_ID = 'product_id',
+    PREDICTED_DEMAND = 'predicted_demand',
+    ITEM_DESCRIPTION = 'item_description',
+    STORE_INVENTORY_ON_HAND = 'store_inventory_on_hand',
+    STORE_INVENTORY_DAYS = 'store_inventory_days',
+    DEMAND_QTY = 'demand_qty',
+    DEMAND_SHELVES = 'demand_shelves',
+    ON_ORDER = 'on_order',
+    AVAILABILITY_ID = 'availability_id',
+    AVAILABILITY_QTY = 'availability_qty',
+    AVAILABILITY_UPDATED_QTY = 'availability_updated_qty',
+    AVAILABILITY_UPDATED_SHELVES = 'availability_updated_shelves',
+}
+
+export const defaultColumns = [
+    {field: defaultRowFields.ID, headerName: 'ID', sortable: false, width: 50, headerClass: 'outer-header'},
+    {field: defaultRowFields.STORE, headerName: 'Store', sortable: true, width: 160, headerClass: 'outer-header'},
+    {field: defaultRowFields.CITY, headerName: 'City', sortable: true, width: 100, headerClass: 'outer-header'},
+    {field: defaultRowFields.STATE, headerName: 'State', sortable: true, width: 65, headerClass: 'outer-header'},
+    {
+        field: defaultRowFields.SHIP_ZONE_DESCRIPTION,
+        headerName: 'Ship Zone',
+        sortable: true,
+        width: 100,
+        headerClass: 'outer-header',
+    },
+    {
+        field: defaultRowFields.STORE_GROUP_NAME,
+        headerName: 'Store Group',
+        sortable: true,
+        width: 70,
+        headerClass: 'outer-header',
+    },
+    {
+        field: defaultRowFields.PRODUCT_PROGRAM_NAME,
+        headerName: 'Program',
+        sortable: true,
+        width: 100,
+        headerClass: 'outer-header',
+    },
+    {
+        field: defaultRowFields.PRODUCT_CATEGORY_NAME,
+        headerName: 'Category',
+        sortable: true,
+        width: 100,
+        headerClass: 'outer-header',
+    },
+    {
+        field: defaultRowFields.PRODUCT_CODE,
+        headerName: 'Product Code',
+        sortable: true,
+        width: 80,
+        headerClass: 'outer-header',
+    },
+    {
+        field: defaultRowFields.ITEM_DESCRIPTION,
+        headerName: 'Item Description',
+        sortable: true,
+        width: 140,
+        headerClass: 'outer-header',
+    },
+    {
+        headerName: 'Store Inventory',
+        headerClass: 'outer-header',
+        children: [
+            {
+                field: defaultRowFields.STORE_INVENTORY_ON_HAND,
+                headerName: 'On Hand',
+                sortable: true,
+                width: 60,
+                headerClass: 'nested-header',
+            },
+            {
+                field: defaultRowFields.STORE_INVENTORY_DAYS,
+                headerName: 'Days',
+                sortable: true,
+                width: 60,
+                headerClass: 'nested-header',
+            },
+        ],
+    },
+    {
+        headerName: 'Demand',
+        headerClass: 'outer-header',
+        children: [
+            {
+                field: defaultRowFields.DEMAND_QTY,
+                headerName: 'Qty',
+                sortable: true,
+                width: 70,
+                headerClass: 'nested-header',
+            },
+            {
+                field: defaultRowFields.DEMAND_SHELVES,
+                headerName: 'Shelves',
+                sortable: true,
+                width: 70,
+                headerClass: 'nested-header',
+            },
+        ],
+    },
+    {
+        field: defaultRowFields.ON_ORDER,
+        headerClass: 'outer-header',
+        headerName: 'On Order',
+        sortable: true,
+        width: 60,
+        wrapText: true,
+        autoHeight: true,
+    },
+    {
+        headerName: 'Availability',
+        headerClass: 'outer-header',
+        children: [
+            {
+                field: defaultRowFields.AVAILABILITY_QTY,
+                headerName: 'Qty',
+                sortable: true,
+                width: 70,
+                headerClass: 'nested-header',
+            },
+            {
+                field: defaultRowFields.AVAILABILITY_UPDATED_QTY,
+                headerName: 'Updated Qty',
+                sortable: true,
+                width: 70,
+                headerClass: 'nested-header',
+            },
+            {
+                field: defaultRowFields.AVAILABILITY_UPDATED_SHELVES,
+                headerName: 'Updated Shelves',
+                sortable: true,
+                width: 70,
+                headerClass: 'nested-header',
+            },
+        ],
+    },
+];

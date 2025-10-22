@@ -12,7 +12,7 @@ export interface IExportedOrderQty {
     shipmentDate: string;
 }
 
-export interface IOrdersItem {
+export interface IProduct {
     id: number;
     store: {
         id: number;
@@ -86,12 +86,12 @@ export interface IProductsResponseData {
         sort: string;
         totalElements: number;
         totalPages: number;
-        results: IOrdersItem[];
+        results: IProduct[];
     };
 }
 
 export interface IProductsState {
-    orders: {
+    products: {
         data: IProductsResponseData;
         statuses: Record<string, unknown>;
         errors: Record<string, unknown>;
