@@ -62,6 +62,7 @@ const DataTable: React.FC = () => {
                 headerHeight={38}
                 animateRows={false}
                 suppressDragLeaveHidesColumns={true}
+                suppressMovableColumns={false}
                 gridOptions={gridOptions}
             />
         </div>

@@ -1186,6 +1186,8 @@ export const defaultColumns = [
         width: 50,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.STORE,
@@ -1194,6 +1196,8 @@ export const defaultColumns = [
         width: 160,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
         sort: 'asc',
     },
     {
@@ -1203,6 +1207,8 @@ export const defaultColumns = [
         width: 100,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.STATE,
@@ -1211,6 +1217,8 @@ export const defaultColumns = [
         width: 65,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.SHIP_ZONE_DESCRIPTION,
@@ -1219,6 +1227,8 @@ export const defaultColumns = [
         width: 100,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.STORE_GROUP_NAME,
@@ -1227,6 +1237,8 @@ export const defaultColumns = [
         width: 70,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.PRODUCT_PROGRAM_NAME,
@@ -1235,6 +1247,8 @@ export const defaultColumns = [
         width: 100,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.PRODUCT_CATEGORY_NAME,
@@ -1243,6 +1257,8 @@ export const defaultColumns = [
         width: 100,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.PRODUCT_CODE,
@@ -1251,6 +1267,8 @@ export const defaultColumns = [
         width: 80,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         field: defaultRowFields.ITEM_DESCRIPTION,
@@ -1259,11 +1277,14 @@ export const defaultColumns = [
         width: 140,
         headerClass: 'outer-header',
         pinned: 'left',
+        suppressMovable: false,
+        lockPinned: true,
     },
     {
         headerName: 'Store Inventory',
         headerClass: 'outer-header',
         marryChildren: true,
+        lockPinned: true,
         children: [
             {
                 field: defaultRowFields.STORE_INVENTORY_ON_HAND,
@@ -1285,6 +1306,7 @@ export const defaultColumns = [
         headerName: 'Demand',
         headerClass: 'outer-header',
         marryChildren: true,
+        lockPinned: true,
         children: [
             {
                 field: defaultRowFields.DEMAND_QTY,
@@ -1310,11 +1332,13 @@ export const defaultColumns = [
         width: 60,
         wrapText: true,
         autoHeight: true,
+        lockPinned: true,
     },
     {
         headerName: 'Availability',
         headerClass: 'outer-header',
         marryChildren: true,
+        lockPinned: true,
         children: [
             {
                 field: defaultRowFields.AVAILABILITY_QTY,
