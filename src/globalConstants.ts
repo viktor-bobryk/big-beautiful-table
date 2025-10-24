@@ -1179,16 +1179,46 @@ export enum defaultRowFields {
 }
 
 export const defaultColumns = [
-    {field: defaultRowFields.ID, headerName: 'ID', sortable: false, width: 50, headerClass: 'outer-header'},
-    {field: defaultRowFields.STORE, headerName: 'Store', sortable: true, width: 160, headerClass: 'outer-header'},
-    {field: defaultRowFields.CITY, headerName: 'City', sortable: true, width: 100, headerClass: 'outer-header'},
-    {field: defaultRowFields.STATE, headerName: 'State', sortable: true, width: 65, headerClass: 'outer-header'},
+    {
+        field: defaultRowFields.ID,
+        headerName: 'ID',
+        sortable: false,
+        width: 50,
+        headerClass: 'outer-header',
+        pinned: 'left',
+    },
+    {
+        field: defaultRowFields.STORE,
+        headerName: 'Store',
+        sortable: true,
+        width: 160,
+        headerClass: 'outer-header',
+        pinned: 'left',
+        sort: 'asc',
+    },
+    {
+        field: defaultRowFields.CITY,
+        headerName: 'City',
+        sortable: true,
+        width: 100,
+        headerClass: 'outer-header',
+        pinned: 'left',
+    },
+    {
+        field: defaultRowFields.STATE,
+        headerName: 'State',
+        sortable: true,
+        width: 65,
+        headerClass: 'outer-header',
+        pinned: 'left',
+    },
     {
         field: defaultRowFields.SHIP_ZONE_DESCRIPTION,
         headerName: 'Ship Zone',
         sortable: true,
         width: 100,
         headerClass: 'outer-header',
+        pinned: 'left',
     },
     {
         field: defaultRowFields.STORE_GROUP_NAME,
@@ -1196,6 +1226,7 @@ export const defaultColumns = [
         sortable: true,
         width: 70,
         headerClass: 'outer-header',
+        pinned: 'left',
     },
     {
         field: defaultRowFields.PRODUCT_PROGRAM_NAME,
@@ -1203,6 +1234,7 @@ export const defaultColumns = [
         sortable: true,
         width: 100,
         headerClass: 'outer-header',
+        pinned: 'left',
     },
     {
         field: defaultRowFields.PRODUCT_CATEGORY_NAME,
@@ -1210,6 +1242,7 @@ export const defaultColumns = [
         sortable: true,
         width: 100,
         headerClass: 'outer-header',
+        pinned: 'left',
     },
     {
         field: defaultRowFields.PRODUCT_CODE,
@@ -1217,6 +1250,7 @@ export const defaultColumns = [
         sortable: true,
         width: 80,
         headerClass: 'outer-header',
+        pinned: 'left',
     },
     {
         field: defaultRowFields.ITEM_DESCRIPTION,
@@ -1224,10 +1258,12 @@ export const defaultColumns = [
         sortable: true,
         width: 140,
         headerClass: 'outer-header',
+        pinned: 'left',
     },
     {
         headerName: 'Store Inventory',
         headerClass: 'outer-header',
+        marryChildren: true,
         children: [
             {
                 field: defaultRowFields.STORE_INVENTORY_ON_HAND,
@@ -1248,6 +1284,7 @@ export const defaultColumns = [
     {
         headerName: 'Demand',
         headerClass: 'outer-header',
+        marryChildren: true,
         children: [
             {
                 field: defaultRowFields.DEMAND_QTY,
@@ -1277,6 +1314,7 @@ export const defaultColumns = [
     {
         headerName: 'Availability',
         headerClass: 'outer-header',
+        marryChildren: true,
         children: [
             {
                 field: defaultRowFields.AVAILABILITY_QTY,

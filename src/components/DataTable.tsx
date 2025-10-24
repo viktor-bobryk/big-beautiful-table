@@ -20,11 +20,22 @@ const DataTable: React.FC = () => {
     const tableData = useSelector(selectTableData);
     const dispatch = useAppDispatch();
 
+    const gridOptions = {
+        suppressGroupMove: true,
+        icons: {
+            sortAscending: '<span style="color:#fff;">▲</span>',
+            sortDescending: '<span style="color:#fff;">▼</span>',
+            sortUnSort: '<span style="color:#fff;">▼▲</span>',
+        },
+    } as any;
+
     const defaultColDef = useMemo<ColDef>(() => {
         return {
             resizable: true,
             wrapText: false,
             autoHeight: false,
+            sortingOrder: ['asc', 'desc', null],
+            unSortIcon: true,
         };
     }, []);
 
@@ -49,6 +60,9 @@ const DataTable: React.FC = () => {
                 pagination={true}
                 paginationPageSize={10}
                 headerHeight={38}
+                animateRows={false}
+                suppressDragLeaveHidesColumns={true}
+                gridOptions={gridOptions}
             />
         </div>
     );

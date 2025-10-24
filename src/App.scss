@@ -73,6 +73,20 @@
     }
 }
 
+/* ===Sorting start=== */
+.ag-sort-indicator-container {
+    .ag-sort-indicator-icon {
+        .ag-icon {
+            color: #fff;
+        }
+    }
+}
+
+.ag-header-cell-label .ag-sort-order {
+    display: none;
+}
+/* ===Sorting end === */
+
 /* === Custom class name for outer header cells === */
 .outer-header {
     background: linear-gradient(180deg, #0097a7 10%, #00838f 100%);

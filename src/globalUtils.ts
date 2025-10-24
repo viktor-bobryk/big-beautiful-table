@@ -65,6 +65,8 @@ export const getDynamicColumns = (products: IProduct[]) => {
               return {
                   headerName: `${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd')} ${day.shipmentDate}`,
                   headerClass: 'outer-header',
+                  marryChildren: true,
+                  suppressMovable: true,
                   children: [
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_qty`,
@@ -72,6 +74,9 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           sortable: true,
                           width: 76,
                           headerClass: 'nested-header',
+                          resizable: true,
+                          suppressMovable: true,
+                          sort: 'asc',
                       },
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_shelves`,
@@ -79,6 +84,9 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           sortable: true,
                           width: 76,
                           headerClass: 'nested-header',
+                          resizable: true,
+                          suppressMovable: true,
+                          sort: 'asc',
                       },
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_carts`,
@@ -86,6 +94,9 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           sortable: true,
                           width: 76,
                           headerClass: 'nested-header',
+                          resizable: true,
+                          suppressMovable: true,
+                          sort: 'asc',
                       },
                   ],
               };
