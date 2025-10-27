@@ -1,12 +1,5 @@
 @use './assets/scss/variables' as vars;
 
-#root {
-    width: 100%;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-}
-
 /* Table grid */
 .custom-grid-container {
     height: 500px;
