@@ -23,9 +23,9 @@ const DataTable: React.FC = () => {
     const gridOptions = {
         suppressGroupMove: true,
         icons: {
-            sortAscending: '<span style="color:#fff;">▲</span>',
-            sortDescending: '<span style="color:#fff;">▼</span>',
-            sortUnSort: '<span style="color:#fff;">▼▲</span>',
+            sortAscending: '<i class="pi pi-sort-amount-up-alt"></i>',
+            sortDescending: '<i class="pi pi-sort-amount-down-alt"></i>',
+            sortUnSort: '<i class="pi pi-sort-alt"></i>',
         },
     } as any;
 
