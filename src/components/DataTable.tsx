@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {ModuleRegistry, AllCommunityModule, ColDef} from 'ag-grid-community';
+import {ModuleRegistry, AllCommunityModule, ColDef, GridOptions} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -20,18 +20,18 @@ const DataTable: React.FC = () => {
     const tableData = useSelector(selectTableData);
     const dispatch = useAppDispatch();
 
-    const gridOptions = {
-        suppressGroupMove: true,
+    const gridOptions: GridOptions = {
         icons: {
             sortAscending: '<i class="pi pi-sort-amount-up-alt"></i>',
             sortDescending: '<i class="pi pi-sort-amount-down-alt"></i>',
             sortUnSort: '<i class="pi pi-sort-alt"></i>',
         },
-    } as any;
+    };
 
     const defaultColDef = useMemo<ColDef>(() => {
         return {
             resizable: true,
+            sortable: true,
             wrapText: false,
             autoHeight: false,
             sortingOrder: ['asc', 'desc', null],
