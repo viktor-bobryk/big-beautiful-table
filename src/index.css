@@ -7,7 +7,11 @@
     .custom-grid-container.ag-theme-alpine {
         .ag-root-wrapper {
             .ag-root-wrapper-body {
-                --ag-selected-row-background-color: #93c1d6 !important;
+                .ag-root {
+                    .ag-body {
+                        --ag-selected-row-background-color: #93c1d6;
+                    }
+                }
             }
         }
     }

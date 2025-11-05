@@ -1181,18 +1181,17 @@ export enum defaultRowFields {
 export const defaultColumns = [
     {
         headerName: '',
-        field: 'selection',
+        colId: 'selection',
         width: 45,
         pinned: 'left',
         lockPinned: true,
-        resizable: false,
         sortable: false,
         suppressMovable: true,
-
-        headerComponent: 'primeCheckboxHeaderRenderer',
-        cellRenderer: 'primeCheckboxRenderer',
-
-        headerClass: () => 'checkbox-center',
+        resizable: false,
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        headerClass: 'checkbox-header',
         cellClass: 'checkbox-center',
     },
     {
