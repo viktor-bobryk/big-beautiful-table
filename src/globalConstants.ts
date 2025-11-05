@@ -1180,14 +1180,20 @@ export enum defaultRowFields {
 
 export const defaultColumns = [
     {
-        field: defaultRowFields.ID,
-        headerName: 'ID',
-        sortable: false,
-        width: 50,
-        headerClass: 'outer-header',
+        headerName: '',
+        field: 'selection',
+        width: 45,
         pinned: 'left',
-        suppressMovable: false,
         lockPinned: true,
+        resizable: false,
+        sortable: false,
+        suppressMovable: true,
+
+        headerComponent: 'primeCheckboxHeaderRenderer',
+        cellRenderer: 'primeCheckboxRenderer',
+
+        headerClass: () => 'checkbox-center',
+        cellClass: 'checkbox-center',
     },
     {
         field: defaultRowFields.STORE,

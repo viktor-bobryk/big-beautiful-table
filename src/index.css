@@ -3,4 +3,12 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
+
+    .custom-grid-container.ag-theme-alpine {
+        .ag-root-wrapper {
+            .ag-root-wrapper-body {
+                --ag-selected-row-background-color: #93c1d6 !important;
+            }
+        }
+    }
 }

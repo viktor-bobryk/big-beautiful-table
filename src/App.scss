@@ -15,7 +15,7 @@
 .ag-theme-quartz .ag-cell,
 .custom-grid-container .ag-cell {
     border-right: 1px solid vars.$cell-border-color;
-    padding: 0 3px;
+    padding: 6px 3px;
     font-size: 12px;
     text-align: start;
 }
@@ -88,6 +88,49 @@
 .nested-header {
     background: linear-gradient(180deg, #0097a7 10%, #009bab 100%);
     color: #fff;
+}
+
+/* === Checkbox=== */
+/* Center column header checkbox just like cells */
+.ag-header-cell.checkbox-center .ag-header-cell-comp-wrapper {
+    background: linear-gradient(180deg, #0097a7 10%, #00838f 100%);
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important; /* ✅ Force full width */
+    flex: 1 1 auto !important; /* ✅ Prevent shrinking */
+    padding: 0 !important;
+}
+
+.ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+    border-right: 1px solid #e9ecef;
+    border-left: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+//.ag-theme-alpine {
+//    --ag-selected-row-background-color: #d7f3ff !important; /* light blue */
+//}
+
+//.ag-theme-alpine .ag-row.ag-row-selected {
+//    background-color: #d7f3ff !important;
+//}
+
+//.custom-grid-container.ag-theme-alpine .ag-row.ag-row-selected {
+//    background-color: #d7f3ff !important;
+//}
+
+.ag-header-cell.checkbox-center :where(*) {
+    position: absolute !important; /* override AG Grid's relative positioning */
+    z-index: auto !important;
+}
+
+.checkbox-center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
 }
 
 /* === Browser`s scrollbar customization === */

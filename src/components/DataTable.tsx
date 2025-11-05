@@ -12,6 +12,8 @@ import {useAppDispatch} from '../hooks/redux';
 import {defaultColumns} from '../globalConstants';
 
 import Footer from './common/Footer/Footer';
+import PrimeCheckboxRenderer from './common/PrimeCheckboxRenderer/PrimeCheckboxRenderer';
+import PrimeCheckboxHeaderRenderer from './common/PrimeCheckboxHeaderrenderer/PrimeCheckboxHeaderRenderer';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -65,11 +67,17 @@ const DataTable: React.FC = () => {
                 rowData={rowData}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
+                rowSelection="multiple" // ✅ allow selection, no auto checkbox column
+                suppressRowClickSelection={true} // ✅ clicking row doesn't toggle selection
+                rowHeight={35}
                 headerHeight={38}
                 animateRows={false}
-                suppressDragLeaveHidesColumns={true}
                 suppressMovableColumns={false}
                 gridOptions={gridOptions}
+                components={{
+                    primeCheckboxRenderer: PrimeCheckboxRenderer,
+                    primeCheckboxHeaderRenderer: PrimeCheckboxHeaderRenderer,
+                }}
             />
             <Footer totalRecords={rowData.length} pagination={pagination} onPageSelect={onPageChange} />
         </div>

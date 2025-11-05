@@ -5,10 +5,12 @@ import 'primeflex/primeflex.css';
 import './App.scss';
 
 import DataTable from './components/DataTable';
+import Test from './components/common/Test';
 
 function App() {
     return (
         <>
+            <Test />
             <h1>Big Beautiful Table</h1>
             <DataTable />
         </>
