@@ -1,7 +1,14 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {ModuleRegistry, AllCommunityModule, ColDef, GridOptions, RowSelectedEvent} from 'ag-grid-community';
+import {
+    ModuleRegistry,
+    AllCommunityModule,
+    ColDef,
+    GridOptions,
+    RowSelectedEvent,
+    RowClickedEvent,
+} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {PaginatorPageChangeEvent} from 'primereact/paginator';
@@ -20,6 +27,7 @@ const DataTable: React.FC = () => {
     const [rowData, setRowData] = useState([]);
     const [pagination, setPagination] = useState({first: 0, rows: 10, page: 1, pageCount: 11});
     const [selectedRows, setSelectedRows] = useState([]);
+    const lastClickedIndex = useRef<number | null>(null);
 
     console.log('selectedRows', selectedRows);
 
@@ -78,6 +86,31 @@ const DataTable: React.FC = () => {
         lastSelectedIndex.current = currentIndex;
     };
 
+    const onRowClicked = (params: RowClickedEvent) => {
+        const event = params.event as MouseEvent;
+        const currentIndex = params.node.rowIndex!;
+        const api = params.api;
+
+        // --- SHIFT + CLICK: select range of rows ---
+        if (event.shiftKey && lastClickedIndex.current !== null) {
+            const start = Math.min(lastClickedIndex.current, currentIndex);
+            const end = Math.max(lastClickedIndex.current, currentIndex);
+
+            api.forEachNode((node) => {
+                if (node.rowIndex! >= start && node.rowIndex! <= end) {
+                    node.setSelected(true);
+                }
+            });
+        }
+
+        // --- CTRL / CMD + CLICK: select row ---
+        else if (event.ctrlKey || event.metaKey) {
+            params.node.setSelected(!params.node.isSelected());
+        }
+
+        lastClickedIndex.current = currentIndex;
+    };
+
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
@@ -109,6 +142,7 @@ const DataTable: React.FC = () => {
                     cellClass: 'checkbox-center',
                     headerClass: 'checkbox-header',
                 }}
+                onRowClicked={onRowClicked}
                 onRowSelected={onRowSelected}
                 getRowId={(params) => params.data.id}
                 rowHeight={35}
