@@ -19,7 +19,6 @@ export const productsSlice = createGenericSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.fulfilled, (state, {payload}) => {
             if (payload) {
-                console.log('payload ', payload);
                 state.data = payload;
             }
         });

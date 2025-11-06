@@ -1179,21 +1179,21 @@ export enum defaultRowFields {
 }
 
 export const defaultColumns = [
-    {
-        headerName: '',
-        colId: 'selection',
-        width: 45,
-        pinned: 'left',
-        lockPinned: true,
-        sortable: false,
-        suppressMovable: true,
-        resizable: false,
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        headerClass: 'checkbox-header',
-        cellClass: 'checkbox-center',
-    },
+    // {
+    //     headerName: '',
+    //     colId: 'selection',
+    //     width: 45,
+    //     pinned: 'left',
+    //     lockPinned: true,
+    //     sortable: false,
+    //     suppressMovable: true,
+    //     resizable: false,
+    //     checkboxSelection: true,
+    //     headerCheckboxSelection: true,
+    //     headerCheckboxSelectionFilteredOnly: true,
+    //     headerClass: 'checkbox-header',
+    //     cellClass: 'checkbox-center',
+    // },
     {
         field: defaultRowFields.STORE,
         headerName: 'Store',

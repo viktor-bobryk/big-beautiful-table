@@ -1,7 +1,7 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {ModuleRegistry, AllCommunityModule, ColDef, GridOptions} from 'ag-grid-community';
+import {ModuleRegistry, AllCommunityModule, ColDef, GridOptions, RowSelectedEvent} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {PaginatorPageChangeEvent} from 'primereact/paginator';
@@ -19,6 +19,12 @@ const DataTable: React.FC = () => {
     const [columns, setColumns] = useState([]);
     const [rowData, setRowData] = useState([]);
     const [pagination, setPagination] = useState({first: 0, rows: 10, page: 1, pageCount: 11});
+    const [selectedRows, setSelectedRows] = useState([]);
+
+    console.log('selectedRows', selectedRows);
+
+    const gridRef = useRef<AgGridReact>(null);
+    const lastSelectedIndex = useRef<number | null>(null);
 
     const dynamicColumns = useSelector(selectDynamicColumns);
     const tableData = useSelector(selectTableData);
@@ -47,6 +53,31 @@ const DataTable: React.FC = () => {
         };
     }, []);
 
+    const onSelectionChanged = () => {
+        const selected = gridRef.current!.api.getSelectedRows();
+        setSelectedRows(selected);
+    };
+
+    const onRowSelected = (params: RowSelectedEvent) => {
+        const api = params.api;
+        const currentIndex = params.node.rowIndex!;
+
+        const mouseEvent = params.event as MouseEvent | undefined;
+
+        if (mouseEvent?.shiftKey && lastSelectedIndex.current !== null) {
+            const start = Math.min(lastSelectedIndex.current, currentIndex);
+            const end = Math.max(lastSelectedIndex.current, currentIndex);
+
+            api.forEachNode((node) => {
+                if (node.rowIndex! >= start && node.rowIndex! <= end) {
+                    node.setSelected(true);
+                }
+            });
+        }
+
+        lastSelectedIndex.current = currentIndex;
+    };
+
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
@@ -62,16 +93,30 @@ const DataTable: React.FC = () => {
     return (
         <div className="custom-grid-container ag-theme-alpine">
             <AgGridReact
+                ref={gridRef}
                 rowData={rowData}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
-                rowSelection="multiple"
+                rowSelection={{
+                    mode: 'multiRow',
+                    enableClickSelection: false,
+                    headerCheckbox: true,
+                }}
+                selectionColumnDef={{
+                    pinned: 'left',
+                    lockPosition: true,
+                    width: 45,
+                    cellClass: 'checkbox-center',
+                    headerClass: 'checkbox-header',
+                }}
+                onRowSelected={onRowSelected}
                 getRowId={(params) => params.data.id}
                 rowHeight={35}
                 headerHeight={38}
                 animateRows={false}
                 suppressMovableColumns={false}
                 gridOptions={gridOptions}
+                onSelectionChanged={onSelectionChanged}
             />
             <Footer totalRecords={rowData.length} pagination={pagination} onPageSelect={onPageChange} />
         </div>
