@@ -1,14 +1,7 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {
-    ModuleRegistry,
-    AllCommunityModule,
-    ColDef,
-    GridOptions,
-    RowSelectedEvent,
-    RowClickedEvent,
-} from 'ag-grid-community';
+import {ModuleRegistry, AllCommunityModule, ColDef, GridOptions} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {PaginatorPageChangeEvent} from 'primereact/paginator';
@@ -19,6 +12,7 @@ import {useAppDispatch} from '../hooks/redux';
 import {defaultColumns} from '../globalConstants';
 
 import Footer from './common/Footer/Footer';
+import {useRowSelection} from '../hooks/useRowSelection';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -27,16 +21,18 @@ const DataTable: React.FC = () => {
     const [rowData, setRowData] = useState([]);
     const [pagination, setPagination] = useState({first: 0, rows: 10, page: 1, pageCount: 11});
     const [selectedRows, setSelectedRows] = useState([]);
-    const lastClickedIndex = useRef<number | null>(null);
 
     console.log('selectedRows', selectedRows);
 
     const gridRef = useRef<AgGridReact>(null);
-    const lastSelectedIndex = useRef<number | null>(null);
 
     const dynamicColumns = useSelector(selectDynamicColumns);
     const tableData = useSelector(selectTableData);
     const dispatch = useAppDispatch();
+
+    const {onRowClicked, onRowSelected} = useRowSelection({
+        setSelectedRows,
+    });
 
     const onPageChange = (e: PaginatorPageChangeEvent) => {
         setPagination(e);
@@ -64,51 +60,6 @@ const DataTable: React.FC = () => {
     const onSelectionChanged = () => {
         const selected = gridRef.current!.api.getSelectedRows();
         setSelectedRows(selected);
-    };
-
-    const onRowSelected = (params: RowSelectedEvent) => {
-        const api = params.api;
-        const currentIndex = params.node.rowIndex!;
-
-        const mouseEvent = params.event as MouseEvent | undefined;
-
-        if (mouseEvent?.shiftKey && lastSelectedIndex.current !== null) {
-            const start = Math.min(lastSelectedIndex.current, currentIndex);
-            const end = Math.max(lastSelectedIndex.current, currentIndex);
-
-            api.forEachNode((node) => {
-                if (node.rowIndex! >= start && node.rowIndex! <= end) {
-                    node.setSelected(true);
-                }
-            });
-        }
-
-        lastSelectedIndex.current = currentIndex;
-    };
-
-    const onRowClicked = (params: RowClickedEvent) => {
-        const event = params.event as MouseEvent;
-        const currentIndex = params.node.rowIndex!;
-        const api = params.api;
-
-        // --- SHIFT + CLICK: select range of rows ---
-        if (event.shiftKey && lastClickedIndex.current !== null) {
-            const start = Math.min(lastClickedIndex.current, currentIndex);
-            const end = Math.max(lastClickedIndex.current, currentIndex);
-
-            api.forEachNode((node) => {
-                if (node.rowIndex! >= start && node.rowIndex! <= end) {
-                    node.setSelected(true);
-                }
-            });
-        }
-
-        // --- CTRL / CMD + CLICK: select row ---
-        else if (event.ctrlKey || event.metaKey) {
-            params.node.setSelected(!params.node.isSelected());
-        }
-
-        lastClickedIndex.current = currentIndex;
     };
 
     useEffect(() => {
