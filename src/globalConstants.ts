@@ -1167,33 +1167,63 @@ export enum defaultRowFields {
     PRODUCT_ID = 'product_id',
     PREDICTED_DEMAND = 'predicted_demand',
     ITEM_DESCRIPTION = 'item_description',
+    STORE_INVENTORY = 'store_inventory',
     STORE_INVENTORY_ON_HAND = 'store_inventory_on_hand',
     STORE_INVENTORY_DAYS = 'store_inventory_days',
+    DEMAND = 'demand',
     DEMAND_QTY = 'demand_qty',
     DEMAND_SHELVES = 'demand_shelves',
     ON_ORDER = 'on_order',
+    AVAILABILITY = 'availability',
     AVAILABILITY_ID = 'availability_id',
     AVAILABILITY_QTY = 'availability_qty',
     AVAILABILITY_UPDATED_QTY = 'availability_updated_qty',
     AVAILABILITY_UPDATED_SHELVES = 'availability_updated_shelves',
+    FORECAST = 'forecast',
 }
 
+export const dayColOptions = [
+    {field: 'forecast_monday', headerName: 'Monday'},
+    {field: 'forecast_tuesday', headerName: 'Tuesday'},
+    {field: 'forecast_wednesday', headerName: 'Wednesday'},
+    {field: 'forecast_thursday', headerName: 'Thursday'},
+    {field: 'forecast_friday', headerName: 'Friday'},
+    {field: 'forecast_saturday', headerName: 'Saturday'},
+    {field: 'forecast_sunday', headerName: 'Sunday'},
+];
+
+export const defaultDayOptions = [
+    {
+        field: 'forecast_monday',
+        headerName: 'Monday',
+    },
+    {
+        field: 'forecast_tuesday',
+        headerName: 'Tuesday',
+    },
+    {
+        field: 'forecast_wednesday',
+        headerName: 'Wednesday',
+    },
+    {
+        field: 'forecast_thursday',
+        headerName: 'Thursday',
+    },
+    {
+        field: 'forecast_friday',
+        headerName: 'Friday',
+    },
+    {
+        field: 'forecast_saturday',
+        headerName: 'Saturday',
+    },
+    {
+        field: 'forecast_sunday',
+        headerName: 'Sunday',
+    },
+];
+
 export const defaultColumns = [
-    // {
-    //     headerName: '',
-    //     colId: 'selection',
-    //     width: 45,
-    //     pinned: 'left',
-    //     lockPinned: true,
-    //     sortable: false,
-    //     suppressMovable: true,
-    //     resizable: false,
-    //     checkboxSelection: true,
-    //     headerCheckboxSelection: true,
-    //     headerCheckboxSelectionFilteredOnly: true,
-    //     headerClass: 'checkbox-header',
-    //     cellClass: 'checkbox-center',
-    // },
     {
         field: defaultRowFields.STORE,
         headerName: 'Store',
@@ -1214,6 +1244,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.STATE,
@@ -1224,6 +1255,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.SHIP_ZONE_DESCRIPTION,
@@ -1234,6 +1266,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.STORE_GROUP_NAME,
@@ -1244,6 +1277,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.PRODUCT_PROGRAM_NAME,
@@ -1254,6 +1288,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.PRODUCT_CATEGORY_NAME,
@@ -1264,6 +1299,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.PRODUCT_CODE,
@@ -1274,6 +1310,7 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
         field: defaultRowFields.ITEM_DESCRIPTION,
@@ -1284,8 +1321,10 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
+        sort: 'asc',
     },
     {
+        field: defaultRowFields.STORE_INVENTORY,
         headerName: 'Store Inventory',
         headerClass: 'outer-header',
         marryChildren: true,
@@ -1312,6 +1351,7 @@ export const defaultColumns = [
         ],
     },
     {
+        field: defaultRowFields.DEMAND,
         headerName: 'Demand',
         headerClass: 'outer-header',
         marryChildren: true,
@@ -1348,6 +1388,7 @@ export const defaultColumns = [
         lockPinned: true,
     },
     {
+        field: defaultRowFields.AVAILABILITY,
         headerName: 'Availability',
         headerClass: 'outer-header',
         marryChildren: true,
@@ -1383,3 +1424,13 @@ export const defaultColumns = [
         ],
     },
 ];
+
+export const localSavedValue = {
+    CALCULATED_OPTIONS: 'calculateOptions',
+    SIDEBAR_FILTERS: 'sidebarFilters',
+    SAVED_FILTERS: 'savedFilters',
+    AUTH_TOKEN: 'auth-token',
+    VISIBLE_COLUMNS: 'visibleColumns',
+    TOOLTIP_CONFIG: 'tooltipConfig',
+    IS_EXPORT_SUCCESSFUL: 'isExportSuccessful',
+};

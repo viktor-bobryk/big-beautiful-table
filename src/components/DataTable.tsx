@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {ModuleRegistry, AllCommunityModule, ColDef, GridOptions} from 'ag-grid-community';
+import {AllCommunityModule, ColDef, GridOptions, ModuleRegistry} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {PaginatorPageChangeEvent} from 'primereact/paginator';
@@ -9,10 +9,22 @@ import {PaginatorPageChangeEvent} from 'primereact/paginator';
 import {selectDynamicColumns, selectTableData} from '../store/slices/products/selectors';
 import {fetchProducts} from '../store/slices/products/thunks';
 import {useAppDispatch} from '../hooks/redux';
-import {defaultColumns} from '../globalConstants';
+import {useRowSelection} from '../hooks/useRowSelection';
+import {defaultColumns, localSavedValue} from '../globalConstants';
 
 import Footer from './common/Footer/Footer';
-import {useRowSelection} from '../hooks/useRowSelection';
+import VisibilityControl from './common/VisibilityControl/VisibilityControl';
+import {
+    getAllOptions,
+    getColumnsFromOptions,
+    getColumnsFromSavedString,
+    getDays,
+    getNormal,
+    getOptionsFromColumns,
+    getOrderedDays,
+    getVisibleNames,
+} from '../globalUtils';
+import {MultiSelectChangeEventWithCheck} from '../globalTypes';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -21,7 +33,7 @@ const DataTable: React.FC = () => {
     const [rowData, setRowData] = useState([]);
     const [pagination, setPagination] = useState({first: 0, rows: 10, page: 1, pageCount: 11});
     const [selectedRows, setSelectedRows] = useState([]);
-
+    const [selectedOptions, setSelectedOptions] = useState([]);
     console.log('selectedRows', selectedRows);
 
     const gridRef = useRef<AgGridReact>(null);
@@ -62,12 +74,38 @@ const DataTable: React.FC = () => {
         setSelectedRows(selected);
     };
 
+    const onColsVisibilityToggle = (event: MultiSelectChangeEventWithCheck) => {
+        const normalOptions = getNormal(event.value);
+
+        const dayOptions = getDays(event.value);
+        const orderedOptions = getOrderedDays(dayOptions);
+
+        const options = [...normalOptions, ...orderedOptions];
+        const visibleNames = getVisibleNames(options);
+
+        localStorage.setItem(localSavedValue.VISIBLE_COLUMNS, visibleNames);
+        const newColumns = getColumnsFromOptions(options, [...defaultColumns, ...dynamicColumns]);
+        setColumns(newColumns);
+        setSelectedOptions(getOptionsFromColumns(newColumns, event.originalEvent.checked));
+    };
+
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
 
     useEffect(() => {
-        setColumns([...defaultColumns, ...dynamicColumns]);
+        const savedColNames = localStorage.getItem(localSavedValue.VISIBLE_COLUMNS);
+        if (dynamicColumns.length) {
+            const allColumns = [...defaultColumns, ...dynamicColumns];
+            if (savedColNames) {
+                const savedColumns = getColumnsFromSavedString(savedColNames, allColumns);
+                setColumns(savedColumns);
+                setSelectedOptions(getOptionsFromColumns(savedColumns, undefined));
+            } else {
+                setColumns(allColumns);
+                setSelectedOptions(getOptionsFromColumns(allColumns, undefined));
+            }
+        }
     }, [dynamicColumns]);
 
     useEffect(() => {
@@ -76,7 +114,19 @@ const DataTable: React.FC = () => {
 
     return (
         <div className="custom-grid-container ag-theme-alpine">
+            <div className="table-header">
+                <VisibilityControl
+                    selectedOptions={selectedOptions}
+                    allOptions={getAllOptions()}
+                    onColumnsToggle={onColsVisibilityToggle}
+                    handleShow={undefined}
+                    handleHide={undefined}
+                    isDropdownVisible={undefined}
+                    isExportSuccessful={undefined}
+                />
+            </div>
             <AgGridReact
+                // theme="legacy"
                 ref={gridRef}
                 rowData={rowData}
                 columnDefs={columns}

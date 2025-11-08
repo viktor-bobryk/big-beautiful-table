@@ -1,6 +1,7 @@
 import {IProduct} from './api/types';
 import moment from 'moment';
-import {dateFormat, defaultRowFields} from './globalConstants';
+import {dateFormat, dayColOptions, defaultColumns, defaultDayOptions, defaultRowFields} from './globalConstants';
+import {IColumn, IOption} from './globalTypes';
 
 export const getFlatProducts = (products: IProduct[]) => {
     return products.map((product: IProduct) => {
@@ -63,6 +64,7 @@ export const getDynamicColumns = (products: IProduct[]) => {
     return products && products.length
         ? products[0].orderQuantity.map((day) => {
               return {
+                  field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}`,
                   headerName: `${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd')} ${day.shipmentDate}`,
                   headerClass: 'outer-header',
                   marryChildren: true,
@@ -102,4 +104,91 @@ export const getDynamicColumns = (products: IProduct[]) => {
               };
           })
         : [];
+};
+
+// Days/forecast columns/ column options
+export const getNormal = (cols: IColumn[] | IOption[]) => {
+    return cols.filter((el) => !el.field.startsWith(defaultRowFields.FORECAST));
+};
+
+// Days/forecast columns/ column options
+export const getDays = (cols: IColumn[] | {field: string; headerName: string}[]) => {
+    return cols.filter((el) => el.field.startsWith(defaultRowFields.FORECAST));
+};
+
+//Transform day column field name into day option field ('forecast_sunday_10/19/2025' => 'forecast_sunday')
+export const getOptionDayField = (colField: string) => {
+    return colField.substring(0, colField.indexOf('_', colField.indexOf('_') + 1));
+};
+
+//Transform day column header name into day option name ('Sunday 10/19/2025' => 'Sunday')
+export const getOptionDayName = (colName: string) => colName.split(' ')[0];
+
+// Permanent columns that always presented in table
+export const getPermanentCols = (cols: IColumn[]) => {
+    return cols.filter((el) => el.field === defaultRowFields.STORE);
+};
+
+export const getVisibleNames = (visibleColumns: IOption[]) => {
+    return visibleColumns.map((column) => column.field).join(',');
+};
+
+export const getOrderedDays = (options: IOption[]) => {
+    return dayColOptions.filter((day) => options.some((selected) => selected.field === day.field));
+};
+
+export const getAllOptions = () => {
+    const normalColumns = defaultColumns
+        .map((col) => {
+            return {field: col.field, headerName: col.headerName};
+        })
+        .filter((col) => col.field !== defaultRowFields.STORE);
+    return [...normalColumns, ...dayColOptions];
+};
+
+export const getColumnsFromSavedString = (savedStr: string, allCols: IColumn[]) => {
+    const orderedFields = savedStr.split(',');
+    const savedCols = orderedFields.reduce((acc, selectedField) => {
+        const found = allCols.find((col) => col.field.startsWith(selectedField));
+
+        if (found) acc.push(found);
+        return acc;
+    }, []);
+    return [defaultColumns[0], ...savedCols];
+};
+
+export const getColumnsFromOptions = (options: IOption[], allCols: IColumn[]) => {
+    const orderedFields = options.map((o) => o.field);
+
+    const savedCols = orderedFields.reduce((acc, selectedField) => {
+        const found = allCols.find((col) => col.field.startsWith(selectedField));
+
+        if (found) acc.push(found);
+        return acc;
+    }, []);
+
+    return [defaultColumns[0], ...savedCols];
+};
+
+export const getOptionsFromColumns = (columns: IColumn[], checked: boolean | undefined) => {
+    if (columns.length) {
+        const normalCols = getNormal(columns);
+        const dayCols = getDays(columns);
+
+        const normalColOptions = normalCols
+            .map((col) => {
+                return {field: col.field, headerName: col.headerName};
+            })
+            .filter((col) => col.field !== defaultRowFields.STORE);
+
+        const dayColOptions = dayCols.map((col) => {
+            return {field: getOptionDayField(col.field), headerName: getOptionDayName(col.headerName)};
+        });
+
+        const orderedOptions = getOrderedDays(dayColOptions);
+
+        const dayOptionsToUse = checked ? defaultDayOptions : orderedOptions;
+
+        return [...normalColOptions, ...dayOptionsToUse];
+    }
 };
