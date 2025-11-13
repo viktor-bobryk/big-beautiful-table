@@ -1,7 +1,11 @@
 import {IProduct} from './api/types';
 import moment from 'moment';
+
 import {dateFormat, dayColOptions, defaultColumns, defaultDayOptions, defaultRowFields} from './globalConstants';
 import {IColumn, IOption} from './globalTypes';
+
+import EditCellBodyTemplate from './components/common/EditCellBodyTemplate/EditCellBodyTemplate';
+import CellEditor from './components/common/NumberEditor/CellEditor';
 
 export const getFlatProducts = (products: IProduct[]) => {
     return products.map((product: IProduct) => {
@@ -79,6 +83,11 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           resizable: true,
                           suppressMovable: true,
                           sort: 'asc',
+                          editable: true,
+                          singleClickEdit: true,
+                          cellEditor: CellEditor,
+                          valueParser: (params) => Number(params.newValue) || 0,
+                          cellRenderer: EditCellBodyTemplate,
                       },
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_shelves`,
@@ -89,6 +98,11 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           resizable: true,
                           suppressMovable: true,
                           sort: 'asc',
+                          editable: true,
+                          singleClickEdit: true,
+                          cellEditor: CellEditor,
+                          valueParser: (params) => Number(params.newValue) || 0,
+                          cellRenderer: EditCellBodyTemplate,
                       },
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_carts`,
@@ -99,6 +113,11 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           resizable: true,
                           suppressMovable: true,
                           sort: 'asc',
+                          editable: true,
+                          singleClickEdit: true,
+                          cellEditor: CellEditor,
+                          valueParser: (params) => Number(params.newValue) || 0,
+                          cellRenderer: EditCellBodyTemplate,
                       },
                   ],
               };
@@ -191,4 +210,12 @@ export const getOptionsFromColumns = (columns: IColumn[], checked: boolean | und
 
         return [...normalColOptions, ...dayOptionsToUse];
     }
+};
+
+export const getValidCellValue = (val: string) => {
+    if (val.length > 1 && val.startsWith('0')) {
+        return val.substring(1);
+    } else if (!val.length) {
+        return 0;
+    } else return val;
 };

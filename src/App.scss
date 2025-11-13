@@ -18,6 +18,10 @@
         text-align: start;
         color: #495057;
     }
+    .ag-cell.ag-cell-inline-editing {
+        border: none !important;
+        outline: none !important;
+    }
 
     .ag-cell.ag-cell-last-left-pinned:not(
             .ag-cell-range-right,
@@ -176,4 +180,10 @@
             }
         }
     }
+}
+
+.cell-editor {
+    width: 100%;
+    font-size: 12px;
+    padding: 3px 3px 3px 9px;
 }

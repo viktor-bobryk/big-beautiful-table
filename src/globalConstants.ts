@@ -1278,6 +1278,7 @@ export const defaultColumns = [
         suppressMovable: false,
         lockPinned: true,
         sort: 'asc',
+        editable: true,
     },
     {
         field: defaultRowFields.PRODUCT_PROGRAM_NAME,
@@ -1338,6 +1339,8 @@ export const defaultColumns = [
                 headerClass: 'nested-header',
                 pinned: null,
                 lockPinned: true,
+                editable: true,
+                valueParser: (params) => Number(params.newValue) || 0,
             },
             {
                 field: defaultRowFields.STORE_INVENTORY_DAYS,

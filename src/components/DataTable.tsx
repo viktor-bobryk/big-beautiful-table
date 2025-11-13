@@ -12,7 +12,6 @@ import {useAppDispatch} from '../hooks/redux';
 import {useRowSelection} from '../hooks/useRowSelection';
 import {defaultColumns, localSavedValue} from '../globalConstants';
 
-import Footer from './common/Footer/Footer';
 import VisibilityControl from './common/VisibilityControl/VisibilityControl';
 import {
     getAllOptions,
@@ -26,20 +25,23 @@ import {
 } from '../globalUtils';
 import {MultiSelectChangeEventWithCheck} from '../globalTypes';
 
+import Footer from './common/Footer/Footer';
+
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const DataTable: React.FC = () => {
     const [columns, setColumns] = useState([]);
-    const [rowData, setRowData] = useState([]);
     const [pagination, setPagination] = useState({first: 0, rows: 10, page: 1, pageCount: 11});
     const [selectedRows, setSelectedRows] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
+
     console.log('selectedRows', selectedRows);
 
     const gridRef = useRef<AgGridReact>(null);
 
     const dynamicColumns = useSelector(selectDynamicColumns);
     const tableData = useSelector(selectTableData);
+
     const dispatch = useAppDispatch();
 
     const {onRowClicked, onRowSelected} = useRowSelection({
@@ -108,10 +110,6 @@ const DataTable: React.FC = () => {
         }
     }, [dynamicColumns]);
 
-    useEffect(() => {
-        setRowData(tableData);
-    }, [tableData]);
-
     return (
         <div className="custom-grid-container ag-theme-alpine">
             <div className="table-header">
@@ -128,7 +126,7 @@ const DataTable: React.FC = () => {
             <AgGridReact
                 // theme="legacy"
                 ref={gridRef}
-                rowData={rowData}
+                rowData={tableData}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
                 rowSelection={{
@@ -152,8 +150,12 @@ const DataTable: React.FC = () => {
                 suppressMovableColumns={false}
                 gridOptions={gridOptions}
                 onSelectionChanged={onSelectionChanged}
+                stopEditingWhenCellsLoseFocus={true} // close editor when clicked outside
+                onCellValueChanged={(params) => {
+                    console.log('Updated:', params.colDef.field, '=', params.newValue);
+                }}
             />
-            <Footer totalRecords={rowData.length} pagination={pagination} onPageSelect={onPageChange} />
+            <Footer totalRecords={tableData.length} pagination={pagination} onPageSelect={onPageChange} />
         </div>
     );
 };
