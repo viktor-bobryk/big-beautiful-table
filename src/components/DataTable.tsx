@@ -26,6 +26,7 @@ import {
 import {MultiSelectChangeEventWithCheck} from '../globalTypes';
 
 import Footer from './common/Footer/Footer';
+import {updateValue} from '../store/slices/products/productsSlice';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -91,6 +92,10 @@ const DataTable: React.FC = () => {
         setSelectedOptions(getOptionsFromColumns(newColumns, event.originalEvent.checked));
     };
 
+    const onCellValueChanged = (value) => {
+        dispatch(updateValue(value));
+    };
+
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
@@ -152,7 +157,7 @@ const DataTable: React.FC = () => {
                 onSelectionChanged={onSelectionChanged}
                 stopEditingWhenCellsLoseFocus={true} // close editor when clicked outside
                 onCellValueChanged={(params) => {
-                    console.log('Updated:', params.colDef.field, '=', params.newValue);
+                    onCellValueChanged(params);
                 }}
             />
             <Footer totalRecords={tableData.length} pagination={pagination} onPageSelect={onPageChange} />

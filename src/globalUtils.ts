@@ -58,7 +58,6 @@ export const getFlatProducts = (products: IProduct[]) => {
             [defaultRowFields.AVAILABILITY_QTY]: product.availability.qty,
             [defaultRowFields.AVAILABILITY_UPDATED_QTY]: product.availability.updatedQty,
             [defaultRowFields.AVAILABILITY_UPDATED_SHELVES]: product.availability.updatedShelves,
-            [defaultRowFields.PREDICTED_DEMAND]: product.predictedDemand,
         };
         return {...defaultValues, ...dynamicValues};
     });
@@ -218,4 +217,26 @@ export const getValidCellValue = (val: string) => {
     } else if (!val.length) {
         return 0;
     } else return val;
+};
+
+export const getUpdatedValue = (storeResults, payload) => {
+    const parts = payload.colDef.field.split('_');
+    const date = parts[2];
+    const type = parts[3];
+
+    return storeResults.map((row) => {
+        if (row.id === payload.data.id) {
+            const newRow = {...row};
+            const newOrderQuantity = newRow.orderQuantity.map((order) => {
+                if (order.shipmentDate === date) {
+                    return {...order, [type]: +payload.value};
+                } else {
+                    return order;
+                }
+            });
+            return {...newRow, orderQuantity: newOrderQuantity};
+        } else {
+            return row;
+        }
+    });
 };
