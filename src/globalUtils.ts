@@ -66,6 +66,7 @@ export const getFlatProducts = (products: IProduct[]) => {
 export const getDynamicColumns = (products: IProduct[]) => {
     return products && products.length
         ? products[0].orderQuantity.map((day) => {
+              const isToday = day.shipmentDate === '10/15/2025';
               return {
                   field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}`,
                   headerName: `${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd')} ${day.shipmentDate}`,
@@ -87,6 +88,7 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           cellEditor: CellEditor,
                           valueParser: (params) => Number(params.newValue) || 0,
                           cellRenderer: EditCellBodyTemplate,
+                          cellClass: isToday ? 'shipment-date-cell' : '',
                       },
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_shelves`,
@@ -102,6 +104,7 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           cellEditor: CellEditor,
                           valueParser: (params) => Number(params.newValue) || 0,
                           cellRenderer: EditCellBodyTemplate,
+                          cellClass: isToday ? 'shipment-date-cell' : '',
                       },
                       {
                           field: `forecast_${moment(day.shipmentDate, 'MM/DD/YYYY').format('dddd').toLowerCase()}_${day?.shipmentDate}_carts`,
@@ -117,6 +120,7 @@ export const getDynamicColumns = (products: IProduct[]) => {
                           cellEditor: CellEditor,
                           valueParser: (params) => Number(params.newValue) || 0,
                           cellRenderer: EditCellBodyTemplate,
+                          cellClass: isToday ? 'shipment-date-cell' : '',
                       },
                   ],
               };

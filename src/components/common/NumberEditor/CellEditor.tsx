@@ -4,6 +4,8 @@ import {InputText} from 'primereact/inputtext';
 
 import {getValidCellValue} from '../../../globalUtils';
 
+import styles from './CellEditor.module.scss';
+
 const CellEditor = ({value, onValueChange}: CustomCellEditorProps) => {
     const refInput = useRef<HTMLInputElement>(null);
 
@@ -20,7 +22,7 @@ const CellEditor = ({value, onValueChange}: CustomCellEditorProps) => {
             ref={refInput}
             type="number"
             keyfilter="int"
-            className="cell-editor"
+            className={styles['cell-editor']}
             onChange={(event) => onValueChange(getValidCellValue(event.target.value))}
         />
     );
