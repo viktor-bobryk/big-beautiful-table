@@ -180,8 +180,8 @@
             }
         }
     }
-}
-
-.shipment-date-cell {
-    background-color: vars.$cyan-light;
+    .shipment-date-cell {
+        background-color: vars.$cyan-light !important;
+        background-image: none !important;
+    }
 }

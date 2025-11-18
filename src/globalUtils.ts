@@ -5,7 +5,7 @@ import {dateFormat, dayColOptions, defaultColumns, defaultDayOptions, defaultRow
 import {IColumn, IOption} from './globalTypes';
 
 import EditCellBodyTemplate from './components/common/EditCellBodyTemplate/EditCellBodyTemplate';
-import CellEditor from './components/common/NumberEditor/CellEditor';
+import CellEditor from './components/common/CellEditor/CellEditor';
 
 export const getFlatProducts = (products: IProduct[]) => {
     return products.map((product: IProduct) => {
@@ -219,7 +219,7 @@ export const getValidCellValue = (val: string) => {
     if (val.length > 1 && val.startsWith('0')) {
         return val.substring(1);
     } else if (!val.length) {
-        return 0;
+        return '0';
     } else return val;
 };
 
