@@ -19,7 +19,10 @@
         color: #495057;
     }
     .ag-cell.ag-cell-inline-editing {
-        border: none !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-bottom: none !important;
+        border-right: 1px solid #e9ecef !important;
         outline: none !important;
     }
 
@@ -75,8 +78,9 @@
     /* ===Sorting end === */
 
     /* === Custom class name for outer header cells === */
-    .outer-header {
-        background: linear-gradient(180deg, #0097a7 10%, #00838f 100%);
+    .outer-header,
+    .ag-header-group-cell {
+        background: linear-gradient(180deg, #0097a7 10%, #00838f 100%) !important;
         color: #fff;
     }
 

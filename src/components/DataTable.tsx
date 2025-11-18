@@ -96,6 +96,7 @@ const DataTable: React.FC = () => {
     };
 
     const onCellValueChanged = (value) => {
+        console.log('value ', value);
         dispatch(updateValue(value));
     };
 
@@ -157,7 +158,7 @@ const DataTable: React.FC = () => {
                     onCellValueChanged(params);
                 }}
                 getRowId={(params) => params.data.id}
-                rowHeight={35}
+                rowHeight={36}
                 headerHeight={38}
                 animateRows={false}
                 suppressMovableColumns={false}
@@ -188,118 +189,74 @@ const DataTable: React.FC = () => {
                 }}
                 onCellKeyDown={(params) => {
                     const e = params.event as KeyboardEvent;
-
-                    // Cast to the normal event (we know we are not using full-width rows)
-                    const col = (params as any).column;
                     const api = params.api;
-                    // const rowIndex = params.node?.rowIndex ?? 0;
+                    const rowIndex = params.node?.rowIndex ?? 0;
 
-                    if (!col) return; // fallback safety
-                    if (e.key === 'Tab') {
-                        setTimeout(() => {
-                            const focused = api.getFocusedCell();
-                            if (focused) {
-                                api.startEditingCell({
-                                    rowIndex: focused.rowIndex,
-                                    colKey: focused.column.getId(),
-                                });
-                            }
-                        }, 0);
-                        return;
-                    }
+                    const col = (params as any).column;
+                    if (!col) return;
+
                     if (e.key === 'ArrowRight') {
                         e.preventDefault();
 
                         const displayedCols = api.getAllDisplayedColumns();
-
-                        // Identify only dynamic columns
                         const dynamicCols = displayedCols.filter((c) => c.getColId().startsWith('forecast_'));
 
                         const currentCol = col;
-                        const rowIndex = params.node?.rowIndex ?? 0;
-
                         const isDynamic = dynamicCols.includes(currentCol);
 
-                        // Normal AG Grid behavior for non-dynamic columns
-                        if (!isDynamic) {
-                            const nextCol = api.getDisplayedColAfter(col);
-                            if (nextCol) {
-                                api.stopEditing();
-                                api.setFocusedCell(rowIndex, nextCol);
-                                api.startEditingCell({
-                                    rowIndex,
-                                    colKey: nextCol.getId(),
-                                });
-                            }
-                            return;
-                        }
-
-                        // Looping logic for dynamic columns
-                        const currentDynamicIndex = dynamicCols.indexOf(currentCol);
-
                         let targetCol;
-                        if (currentDynamicIndex === dynamicCols.length - 1) {
-                            // Loop: last dynamic col → first dynamic col
-                            targetCol = dynamicCols[0];
+
+                        if (isDynamic) {
+                            const idx = dynamicCols.indexOf(currentCol);
+                            targetCol = idx === dynamicCols.length - 1 ? dynamicCols[0] : dynamicCols[idx + 1];
                         } else {
-                            // Move right normally
-                            targetCol = dynamicCols[currentDynamicIndex + 1];
+                            targetCol = api.getDisplayedColAfter(currentCol);
                         }
 
-                        api.stopEditing();
-                        api.setFocusedCell(rowIndex, targetCol);
-                        api.startEditingCell({
-                            rowIndex,
-                            colKey: targetCol.getId(),
-                        });
+                        if (targetCol) {
+                            api.stopEditing();
+                            api.setFocusedCell(rowIndex, targetCol);
+                            api.startEditingCell({
+                                rowIndex,
+                                colKey: targetCol.getColId(),
+                            });
+
+                            const editor = api.getCellEditorInstances()[0];
+                            editor?.afterGuiAttached?.();
+                        }
 
                         return;
                     }
+
                     if (e.key === 'ArrowLeft') {
                         e.preventDefault();
 
                         const displayedCols = api.getAllDisplayedColumns();
-
-                        // All dynamic columns start with "forecast_"
                         const dynamicCols = displayedCols.filter((c) => c.getColId().startsWith('forecast_'));
 
                         const currentCol = col;
-                        const rowIndex = params.node?.rowIndex ?? 0;
-
                         const isDynamic = dynamicCols.includes(currentCol);
 
-                        // Normal behavior for non-dynamic columns
-                        if (!isDynamic) {
-                            const prevCol = api.getDisplayedColBefore(col);
-                            if (prevCol) {
-                                api.stopEditing();
-                                api.setFocusedCell(rowIndex, prevCol);
-                                api.startEditingCell({
-                                    rowIndex,
-                                    colKey: prevCol.getId(),
-                                });
-                            }
-                            return;
-                        }
-
-                        // Dynamic-column loop
-                        const currentDynamicIndex = dynamicCols.indexOf(currentCol);
-
                         let targetCol;
-                        if (currentDynamicIndex === 0) {
-                            // Loop from first → last dynamic column
-                            targetCol = dynamicCols[dynamicCols.length - 1];
+
+                        if (isDynamic) {
+                            const idx = dynamicCols.indexOf(currentCol);
+                            targetCol = idx === 0 ? dynamicCols[dynamicCols.length - 1] : dynamicCols[idx - 1];
                         } else {
-                            // Move left normally within dynamic columns
-                            targetCol = dynamicCols[currentDynamicIndex - 1];
+                            targetCol = api.getDisplayedColBefore(currentCol);
                         }
 
-                        api.stopEditing();
-                        api.setFocusedCell(rowIndex, targetCol);
-                        api.startEditingCell({
-                            rowIndex,
-                            colKey: targetCol.getId(),
-                        });
+                        if (targetCol) {
+                            api.stopEditing();
+                            api.setFocusedCell(rowIndex, targetCol);
+                            api.startEditingCell({
+                                rowIndex,
+                                colKey: targetCol.getColId(),
+                            });
+
+                            const editor = api.getCellEditorInstances()[0];
+                            editor?.afterGuiAttached?.();
+                        }
 
                         return;
                     }
