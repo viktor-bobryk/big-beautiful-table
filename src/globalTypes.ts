@@ -1,4 +1,5 @@
 import {MultiSelectChangeEvent} from 'primereact/multiselect';
+import {ColDef} from 'ag-grid-community';
 
 export interface IPagination {
     first: number;
@@ -41,4 +42,7 @@ export interface MultiSelectChangeEventWithCheck extends MultiSelectChangeEvent 
     originalEvent: MultiSelectChangeEvent['originalEvent'] & {
         checked?: boolean;
     };
+}
+export interface SelectionColumnDefFixed extends ColDef {
+    suppressTabbing?: boolean;
 }

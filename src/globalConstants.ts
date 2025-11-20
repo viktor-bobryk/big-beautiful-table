@@ -1244,7 +1244,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.STATE,
@@ -1255,7 +1254,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.SHIP_ZONE_DESCRIPTION,
@@ -1266,7 +1264,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.STORE_GROUP_NAME,
@@ -1277,11 +1274,10 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
-        editable: true,
     },
     {
         field: defaultRowFields.PRODUCT_PROGRAM_NAME,
+        colId: defaultRowFields.PRODUCT_PROGRAM_NAME,
         headerName: 'Program',
         sortable: true,
         width: 100,
@@ -1289,7 +1285,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.PRODUCT_CATEGORY_NAME,
@@ -1300,7 +1295,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.PRODUCT_CODE,
@@ -1311,7 +1305,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.ITEM_DESCRIPTION,
@@ -1322,7 +1315,6 @@ export const defaultColumns = [
         pinned: 'left',
         suppressMovable: false,
         lockPinned: true,
-        sort: 'asc',
     },
     {
         field: defaultRowFields.STORE_INVENTORY,
@@ -1339,8 +1331,6 @@ export const defaultColumns = [
                 headerClass: 'nested-header',
                 pinned: null,
                 lockPinned: true,
-                editable: true,
-                valueParser: (params) => Number(params.newValue) || 0,
             },
             {
                 field: defaultRowFields.STORE_INVENTORY_DAYS,

@@ -15,3 +15,15 @@ export const fetchProducts = createAsyncThunk<
         return rejectWithValue({message: err});
     }
 });
+
+export const fetchSortedProducts = createAsyncThunk<
+    IProductsResponseData,
+    void, // <— No argument expected
+    {rejectValue: {message: unknown}}
+>(`${slicesNames.products}/${productNames.getProducts}`, async (_, {rejectWithValue}) => {
+    try {
+        return await getProducts();
+    } catch (err) {
+        return rejectWithValue({message: err});
+    }
+});

@@ -1,7 +1,14 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AgGridReact} from 'ag-grid-react';
-import {AllCommunityModule, CellPosition, ColDef, GridOptions, ModuleRegistry} from 'ag-grid-community';
+import {
+    AllCommunityModule,
+    CellKeyDownEvent,
+    CellPosition,
+    ColDef,
+    GridOptions,
+    ModuleRegistry,
+} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {PaginatorPageChangeEvent} from 'primereact/paginator';
@@ -23,7 +30,7 @@ import {
     getOrderedDays,
     getVisibleNames,
 } from '../globalUtils';
-import {MultiSelectChangeEventWithCheck} from '../globalTypes';
+import {MultiSelectChangeEventWithCheck, SelectionColumnDefFixed} from '../globalTypes';
 
 import Footer from './common/Footer/Footer';
 
@@ -96,8 +103,12 @@ const DataTable: React.FC = () => {
     };
 
     const onCellValueChanged = (value) => {
-        console.log('value ', value);
         dispatch(updateValue(value));
+    };
+
+    const onSort = (value) => {
+        console.log('value', value);
+        // dispatch(fetchSortedProducts(value));
     };
 
     useEffect(() => {
@@ -138,19 +149,41 @@ const DataTable: React.FC = () => {
                 rowData={tableData}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
+                onSortChanged={(params) => {
+                    const state = params.api.getColumnState();
+                    const sortedCols = state.filter((col) => col.sort != null);
+
+                    if (sortedCols.length > 0) {
+                        const sortedCol = sortedCols[0];
+                        const column = params.api.getColumn(sortedCol.colId!);
+                        const field = column?.getColDef().field ?? sortedCol.colId;
+
+                        onSort({
+                            field,
+                            direction: sortedCol.sort!,
+                        });
+                    } else {
+                        onSort({
+                            field: null,
+                            direction: null,
+                        });
+                    }
+                }}
                 rowSelection={{
                     mode: 'multiRow',
                     enableClickSelection: false,
                     headerCheckbox: true,
                 }}
                 selectionColumnDef={{
+                    ...({
+                        suppressTabbing: true,
+                    } satisfies SelectionColumnDefFixed),
                     pinned: 'left',
                     lockPosition: true,
                     width: 45,
                     cellClass: 'checkbox-center',
                     headerClass: 'checkbox-header',
                     suppressNavigable: true,
-                    ...({suppressTabbing: true} as any), // Required so Shift+Tab works
                 }}
                 onRowClicked={onRowClicked}
                 onRowSelected={onRowSelected}
@@ -187,12 +220,12 @@ const DataTable: React.FC = () => {
                         };
                     },
                 }}
-                onCellKeyDown={(params) => {
+                onCellKeyDown={(params: CellKeyDownEvent) => {
                     const e = params.event as KeyboardEvent;
                     const api = params.api;
                     const rowIndex = params.node?.rowIndex ?? 0;
 
-                    const col = (params as any).column;
+                    const col = params.column;
                     if (!col) return;
 
                     if (e.key === 'ArrowRight') {
